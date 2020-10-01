@@ -8,57 +8,54 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import SearchIcon from '@material-ui/icons/Search';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
-    width: 400,
-  },
-  input: {
-    marginLeft: theme.spacing(1),
-    flex: 1,
-  },
-  iconButton: {
-    padding: 10,
-  },
-  divider: {
-    height: 28,
-    margin: 4,
-  },
-}));
+import Fab from '@material-ui/core/Fab';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import { FlashOff } from '@material-ui/icons';
 
 function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
-  const [urlInput, setUrlInput] = useState('lol');
+  const [urlInput, setUrlInput] = useState('');
 
   function getYTId(url) {
     var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
+    console.log(url, match);
     if (match && match[2].length == 11) {
       return match[2];
     } else {
-      // show error popup here
+      return 'Error:Invalid Url';
     }
   }
 
-  function getVideoName() {
-    fetch(
-      'https://noembed.com/embed?url=https://www.youtube.com/watch?v=x22TJMv2RYo'
-    )
+  async function getVideoName(url) {
+    await fetch(url)
       .then((response) => response.json())
-      .then((data) => console.log('This is your data', data.title));
+      .then((data) => {
+        console.log('run first');
+        return data.title;
+      });
   }
 
-  const classes = useStyles();
-
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    var yid = getYTId(urlInput);
+    console.log(yid);
+    if (yid.split(':')[0] === 'Error') console.log(yid.split(':')[1]);
+    else {
+      const newVideo = await getVideoName(
+        `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${yid}`
+      );
+      console.log('run second');
+      setVideoQueue((prevVideoQueue) => [newVideo, ...prevVideoQueue]);
+    }
+    console.log(videoQueue);
+    // custom form handling here
+  };
   return (
     <>
       <div className={styles.wrapper}>
         <div className={styles.box1}>
           <div className={styles.videoWrapper}>
-            {getVideoName()}
             <iframe
               width="560"
               height="349"
@@ -69,23 +66,33 @@ function MyDesk() {
           </div>
         </div>
         <Paper elevation={10} className={styles.box2}>
-          <Paper component="form" className={classes.root}>
-            <IconButton className={classes.iconButton} aria-label="menu">
-              <YouTubeIcon />
-            </IconButton>
-            <InputBase
-              className={classes.input}
-              placeholder="Search Google Maps"
-              inputProps={{ 'aria-label': 'search google maps' }}
-            />
-            <IconButton
-              type="submit"
-              className={classes.iconButton}
-              aria-label="search"
-            >
-              <SearchIcon />
-            </IconButton>
-          </Paper>
+          <form onSubmit={onSubmit}>
+            <Paper elevation={5} className={styles.root}>
+              <IconButton className={styles.iconButton} aria-label="menu">
+                <YouTubeIcon />
+              </IconButton>
+              <InputBase
+                className={styles.input}
+                placeholder="Enter Youtube Url"
+                onChange={(e) => setUrlInput(e.target.value)}
+              />
+              <IconButton type="submit" aria-label="search">
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+          </form>
+          <ul className={styles.urlList}>
+            <li className={styles.urlListItem}>
+              <Fab
+                color="secondary"
+                aria-label="edit"
+                className={styles.fabButton}
+              >
+                <PlayArrowIcon className={styles.editIcon} />
+              </Fab>
+              <p>Youtube video name here</p>
+            </li>
+          </ul>
         </Paper>
       </div>
     </>

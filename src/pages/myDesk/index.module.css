@@ -18,6 +18,7 @@
 
 .box2 {
   grid-column: 2/3;
+  padding: 1.4rem 0rem;
 }
 
 .videoWrapper {
@@ -34,4 +35,40 @@
   -webkit-box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3),
     0 15px 12px rgba(0, 0, 0, 0.22);
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+/* search box */
+
+.root {
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  margin: auto;
+}
+
+/* result list */
+
+.urlList {
+  width: 100%;
+  list-style: none;
+}
+
+.urlListItem {
+  display: flex;
+  align-items: center;
+}
+
+.urlListItem > .fabButton {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.fabButton .editIcon {
+  width: 50%;
+}
+
+.urlListItem p {
+  margin-left: 5%;
 }
