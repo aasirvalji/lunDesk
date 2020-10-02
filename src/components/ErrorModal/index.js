@@ -11,6 +11,8 @@ export default function AlertDialog({ isOpen, closeModal, header, body }) {
     <div>
       <Dialog
         open={isOpen}
+        maxWidth="sm"
+        fullWidth={true}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >

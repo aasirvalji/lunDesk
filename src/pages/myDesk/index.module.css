@@ -18,7 +18,25 @@
 
 .box2 {
   grid-column: 2/3;
+}
+
+.vidContainer {
   padding: 1.4rem 0rem;
+  margin-bottom: 2rem;
+  max-height: 23vw;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  overflow-x: hidden;
+}
+
+.vidContainer {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+.vidContainer::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
 }
 
 .videoWrapper {
@@ -67,12 +85,28 @@
 .urlListItem > .fabButton {
   width: 2.5rem;
   height: 2.5rem;
+  background-color: #b20000;
+  color: white;
 }
 
-.fabButton .editIcon {
+#editIcon {
   width: 50%;
 }
 
 .urlListItem p {
-  margin-left: 5%;
+  padding: 0% 2%;
+}
+
+.doneContainer {
+  margin-top: 1rem;
+  margin: auto;
+  width: auto;
+  padding: 0.4rem 0rem;
+  max-height: 23vw;
+}
+
+.doneContent {
+  font-size: 50%;
+  display: flex;
+  align-items: center;
 }

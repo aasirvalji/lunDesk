@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './index.module.css';
-import ErrorModal from '../../components/ErrorModal';
+import ErrorModal from '../../components/ErrorModal/index';
+import Snackbar from '../../components/Snackbar/index';
 
 // material UI imports
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,14 +12,21 @@ import YouTubeIcon from '@material-ui/icons/YouTube';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Tooltip from '@material-ui/core/Tooltip';
 
 function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
   const [urlInput, setUrlInput] = useState('');
-  const [currentUrl, setCurrentUrl] = useState('');
+  const [currentUrl, setCurrentUrl] = useState(
+    'http://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1'
+  );
   const [errorModal, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState(['', '']);
+  const [snackbar, setSnackbar] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
+  // validate youtube url and get id
   function getYTId(url) {
     var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
@@ -30,10 +38,12 @@ function MyDesk() {
     }
   }
 
+  // error modal handler
   function closeModal() {
     setErrorModal(false);
   }
 
+  // api call to fetch video information
   async function getVideoName(url, yid) {
     const res = await fetch(url, { method: 'GET' });
     res
@@ -52,6 +62,7 @@ function MyDesk() {
       .catch((err) => console.log(err));
   }
 
+  // url submission handler
   const onSubmit = async (event) => {
     event.preventDefault();
     var yid = getYTId(urlInput);
@@ -67,14 +78,40 @@ function MyDesk() {
     }
     // custom form handling here
   };
+
+  // snack bar handler
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackbar(false);
+  };
+
+  // set video in progress
+  function selectVideo(url, index) {
+    setCurrentUrl(url);
+
+    if (selectedIndex !== null) {
+      document.getElementById(`fab-${selectedIndex}`).style.backgroundColor =
+        '#B20000';
+    }
+    document.getElementById(`fab-${index}`).style.backgroundColor = '#2ECC40';
+
+    setSelectedIndex(index);
+  }
+
+  // remove current video and set another video
+  function removeVideo() {}
+
   return (
     <>
       <div className={styles.wrapper}>
         <div className={styles.box1}>
           <div className={styles.videoWrapper}>
             <iframe
-              width="560"
-              height="349"
+              // width="560"
+              // height="349"
               src={currentUrl}
               frameBorder="0"
               allowFullScreen={true}
@@ -82,46 +119,62 @@ function MyDesk() {
             ></iframe>
           </div>
         </div>
-        <Paper elevation={10} className={styles.box2}>
-          <form onSubmit={onSubmit}>
-            <Paper elevation={5} className={styles.root}>
-              <IconButton className={styles.iconButton} aria-label="menu">
-                <YouTubeIcon />
-              </IconButton>
-              <InputBase
-                className={styles.input}
-                placeholder="Enter Youtube Url"
-                onChange={(e) => setUrlInput(e.target.value)}
-              />
-              <IconButton type="submit" aria-label="search">
-                <SearchIcon />
-              </IconButton>
-            </Paper>
-          </form>
-          <ul className={styles.urlList}>
-            {videoQueue.length > 0 ? (
-              videoQueue.map((video, index) => (
-                <li className={styles.urlListItem} key={index}>
-                  <Fab
-                    color="secondary"
-                    aria-label="edit"
-                    className={styles.fabButton}
-                    onClick={() =>
-                      setCurrentUrl(
-                        `http://www.youtube.com/embed/${video.yid}?rel=0&hd=1`
-                      )
-                    }
-                  >
-                    <PlayArrowIcon className={styles.editIcon} />
-                  </Fab>
-                  <p>{`${video.title} By ${video.author_name}`}</p>
-                </li>
-              ))
-            ) : (
-              <p>no videos</p>
-            )}
-          </ul>
-        </Paper>
+        <div className={styles.box2}>
+          <Paper elevation={10} className={styles.vidContainer}>
+            <form onSubmit={onSubmit}>
+              <Paper elevation={5} className={styles.root}>
+                <IconButton className={styles.iconButton} aria-label="menu">
+                  <YouTubeIcon />
+                </IconButton>
+                <InputBase
+                  className={styles.input}
+                  placeholder="Enter Youtube Url"
+                  onChange={(e) => setUrlInput(e.target.value)}
+                />
+                <IconButton type="submit" aria-label="search">
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+            </form>
+            <ul className={styles.urlList}>
+              {videoQueue.length > 0 ? (
+                videoQueue.map((video, index) => (
+                  <li className={styles.urlListItem} key={index}>
+                    <Fab
+                      aria-label="edit"
+                      className={styles.fabButton}
+                      id={`fab-${index}`}
+                      onClick={() =>
+                        selectVideo(
+                          `http://www.youtube.com/embed/${video.yid}?rel=0&hd=1`,
+                          index
+                        )
+                      }
+                    >
+                      <PlayArrowIcon
+                        id={styles.editIcon}
+                        className={styles.editIcon}
+                      />
+                    </Fab>
+                    <p>{`${video.title} By ${video.author_name}`}</p>
+                  </li>
+                ))
+              ) : (
+                <p>no videos</p>
+              )}
+            </ul>
+          </Paper>
+          <Paper elevation={5} className={styles.doneContainer}>
+            <div className={styles.doneContent}>
+              <Tooltip title="Remove video">
+                <IconButton aria-label="delete" onClick={() => removeVideo()}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+              <h2>Done watching this video?</h2>
+            </div>
+          </Paper>
+        </div>
       </div>
 
       <ErrorModal
@@ -129,6 +182,12 @@ function MyDesk() {
         closeModal={closeModal}
         header={errorMessage[0]}
         body={errorMessage[1]}
+      />
+
+      <Snackbar
+        isOpen={snackbar}
+        message="Video completed"
+        handleClose={handleClose}
       />
     </>
   );
