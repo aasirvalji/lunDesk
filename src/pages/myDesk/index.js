@@ -28,12 +28,15 @@ function MyDesk() {
   }
 
   async function getVideoName(url) {
-    await fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('run first');
-        return data.title;
-      });
+    const res = await fetch(url, { method: 'GET' });
+    res
+      .json()
+      .then((res) => {
+        // Fetched response
+        console.log(res);
+        setVideoQueue((prevVideoQueue) => [res, ...prevVideoQueue]);
+      })
+      .catch((err) => console.log(err));
   }
 
   const onSubmit = async (event) => {
@@ -42,13 +45,12 @@ function MyDesk() {
     console.log(yid);
     if (yid.split(':')[0] === 'Error') console.log(yid.split(':')[1]);
     else {
-      const newVideo = await getVideoName(
+      var newVideo;
+
+      await getVideoName(
         `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${yid}`
       );
-      console.log('run second');
-      setVideoQueue((prevVideoQueue) => [newVideo, ...prevVideoQueue]);
     }
-    console.log(videoQueue);
     // custom form handling here
   };
   return (
@@ -82,16 +84,22 @@ function MyDesk() {
             </Paper>
           </form>
           <ul className={styles.urlList}>
-            <li className={styles.urlListItem}>
-              <Fab
-                color="secondary"
-                aria-label="edit"
-                className={styles.fabButton}
-              >
-                <PlayArrowIcon className={styles.editIcon} />
-              </Fab>
-              <p>Youtube video name here</p>
-            </li>
+            {videoQueue.length > 0 ? (
+              videoQueue.map((video) => (
+                <li className={styles.urlListItem}>
+                  <Fab
+                    color="secondary"
+                    aria-label="edit"
+                    className={styles.fabButton}
+                  >
+                    <PlayArrowIcon className={styles.editIcon} />
+                  </Fab>
+                  <p>{`${video.title} and ${video.author_name}`}</p>
+                </li>
+              ))
+            ) : (
+              <p>no videos</p>
+            )}
           </ul>
         </Paper>
       </div>
