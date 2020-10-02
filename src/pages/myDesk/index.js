@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './index.module.css';
 import ErrorModal from '../../components/ErrorModal/index';
 import Snackbar from '../../components/Snackbar/index';
+import { Stopwatch } from '../../components/Stopwatch';
 
 // material UI imports
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
@@ -27,12 +27,30 @@ function MyDesk() {
   const [snackbar, setSnackbar] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
+  // tab change handler
+  const handleTabChange = (e) => {
+    if (document.visibilityState === 'visible') {
+      console.log('tab is activate');
+    } else {
+      console.log('tab is inactive');
+    }
+  };
+
+  // add tab change event listener
+  useEffect(() => {
+    document.addEventListener('visibilitychange', handleTabChange);
+    return () => {
+      // unsubscribe event
+      document.removeEventListener('visibilitychange', handleTabChange);
+    };
+  }, [handleTabChange]);
+
   // validate youtube url and get id
   function getYTId(url) {
     var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
     console.log(url, match);
-    if (match && match[2].length == 11) {
+    if (match && match[2].length === 11) {
       return match[2];
     } else {
       return 'Error:Invalid Url';
@@ -120,25 +138,6 @@ function MyDesk() {
     setCurrentUrl('http://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1');
     setSelectedIndex(null);
     setSnackbar(true);
-    // otherwise, push back info to the applicable index
-    // else {
-    //   var newIndex;
-    //   var newUrl;
-
-    //   if (selectedIndex === videoQueue.length - 1) newIndex = selectedIndex - 1;
-    //   else newIndex = selectedIndex;
-
-    //   var tempQueue = videoQueue;
-    //   for (var i = 0; i < videoQueue.length; i++) {
-    //     if (i === selectedIndex) {
-    //       newUrl = `http://www.youtube.com/embed/${videoQueue[i].yid}?rel=0&hd=1`;
-    //       tempQueue.splice(i, 1);
-    //       selectVideo(newUrl, newIndex);
-    //       setVideoQueue([...tempQueue]);
-    //       break;
-    //     }
-    //   }
-    // }
   }
 
   return (
@@ -220,6 +219,9 @@ function MyDesk() {
         </div>
       </div>
 
+      <Stopwatch />
+
+      {/* message display components */}
       <ErrorModal
         isOpen={errorModal}
         closeModal={closeModal}

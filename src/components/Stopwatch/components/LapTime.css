@@ -1,0 +1,12 @@
+.LapTime {
+  text-align: center;
+}
+
+.LapTime__lap,
+.LapTime__time {
+  width: 50%;
+  padding: 5px;
+  text-align: center;
+  display: inline-block;
+  box-sizing: border-box;
+}

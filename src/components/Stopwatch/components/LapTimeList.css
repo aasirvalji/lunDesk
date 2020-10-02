@@ -1,0 +1,22 @@
+.LapTimeList__list {
+  list-style: none;
+  padding: 0px;
+  margin: 15px auto;
+}
+
+.LapTimeList__listwrap {
+  max-width: 270px;
+  margin: 0 auto;
+}
+
+.LapTimeList__headers {
+  width: 100%;
+}
+
+.LapTimeList__headers span {
+  width: 50%;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  float: left;
+}
