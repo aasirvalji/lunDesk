@@ -4,13 +4,11 @@ import Paper from '@material-ui/core/Paper';
 
 import { makeStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import { FlashOff } from '@material-ui/icons';
 
 function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
@@ -45,8 +43,6 @@ function MyDesk() {
     console.log(yid);
     if (yid.split(':')[0] === 'Error') console.log(yid.split(':')[1]);
     else {
-      var newVideo;
-
       await getVideoName(
         `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${yid}`
       );
@@ -64,6 +60,7 @@ function MyDesk() {
               src="http://www.youtube.com/embed/x22TJMv2RYo?rel=0&hd=1"
               frameBorder="0"
               allowFullScreen={true}
+              title="Youtube"
             ></iframe>
           </div>
         </div>
@@ -85,8 +82,8 @@ function MyDesk() {
           </form>
           <ul className={styles.urlList}>
             {videoQueue.length > 0 ? (
-              videoQueue.map((video) => (
-                <li className={styles.urlListItem}>
+              videoQueue.map((video, index) => (
+                <li className={styles.urlListItem} key={index}>
                   <Fab
                     color="secondary"
                     aria-label="edit"
