@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styles from './index.module.css';
-import Paper from '@material-ui/core/Paper';
+import ErrorModal from '../../components/ErrorModal';
 
+// material UI imports
 import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import YouTubeIcon from '@material-ui/icons/YouTube';
@@ -13,6 +15,9 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
   const [urlInput, setUrlInput] = useState('');
+  const [currentUrl, setCurrentUrl] = useState('');
+  const [errorModal, setErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(['', '']);
 
   function getYTId(url) {
     var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -25,14 +30,24 @@ function MyDesk() {
     }
   }
 
-  async function getVideoName(url) {
+  function closeModal() {
+    setErrorModal(false);
+  }
+
+  async function getVideoName(url, yid) {
     const res = await fetch(url, { method: 'GET' });
     res
       .json()
       .then((res) => {
         // Fetched response
         console.log(res);
-        setVideoQueue((prevVideoQueue) => [res, ...prevVideoQueue]);
+        const videoDetails = {
+          author_name: res.author_name,
+          author_url: res.author_url,
+          yid,
+          title: res.title,
+        };
+        setVideoQueue((prevVideoQueue) => [videoDetails, ...prevVideoQueue]);
       })
       .catch((err) => console.log(err));
   }
@@ -41,10 +56,13 @@ function MyDesk() {
     event.preventDefault();
     var yid = getYTId(urlInput);
     console.log(yid);
-    if (yid.split(':')[0] === 'Error') console.log(yid.split(':')[1]);
-    else {
+    if (yid.split(':')[0] === 'Error') {
+      setErrorModal(true);
+      setErrorMessage([yid.split(':')[1], 'Please try again']);
+    } else {
       await getVideoName(
-        `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${yid}`
+        `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${yid}`,
+        yid
       );
     }
     // custom form handling here
@@ -57,7 +75,7 @@ function MyDesk() {
             <iframe
               width="560"
               height="349"
-              src="http://www.youtube.com/embed/x22TJMv2RYo?rel=0&hd=1"
+              src={currentUrl}
               frameBorder="0"
               allowFullScreen={true}
               title="Youtube"
@@ -88,10 +106,15 @@ function MyDesk() {
                     color="secondary"
                     aria-label="edit"
                     className={styles.fabButton}
+                    onClick={() =>
+                      setCurrentUrl(
+                        `http://www.youtube.com/embed/${video.yid}?rel=0&hd=1`
+                      )
+                    }
                   >
                     <PlayArrowIcon className={styles.editIcon} />
                   </Fab>
-                  <p>{`${video.title} and ${video.author_name}`}</p>
+                  <p>{`${video.title} By ${video.author_name}`}</p>
                 </li>
               ))
             ) : (
@@ -100,6 +123,13 @@ function MyDesk() {
           </ul>
         </Paper>
       </div>
+
+      <ErrorModal
+        isOpen={errorModal}
+        closeModal={closeModal}
+        header={errorMessage[0]}
+        body={errorMessage[1]}
+      />
     </>
   );
 }

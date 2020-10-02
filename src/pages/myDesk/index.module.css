@@ -48,6 +48,10 @@
   margin: auto;
 }
 
+.input {
+  width: 100%;
+}
+
 /* result list */
 
 .urlList {
