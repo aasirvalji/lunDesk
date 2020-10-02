@@ -14,6 +14,7 @@ import Fab from '@material-ui/core/Fab';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
+import GolfCourseIcon from '@material-ui/icons/GolfCourse';
 
 function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
@@ -95,6 +96,11 @@ function MyDesk() {
     if (selectedIndex !== null) {
       document.getElementById(`fab-${selectedIndex}`).style.backgroundColor =
         '#B20000';
+    } else {
+      videoQueue.forEach((video, index) => {
+        document.getElementById(`fab-${index}`).style.backgroundColor =
+          '#B20000';
+      });
     }
     document.getElementById(`fab-${index}`).style.backgroundColor = '#2ECC40';
 
@@ -102,7 +108,38 @@ function MyDesk() {
   }
 
   // remove current video and set another video
-  function removeVideo() {}
+  function removeVideo() {
+    var tempQueue = videoQueue;
+    for (var i = 0; i < videoQueue.length; i++) {
+      if (i === selectedIndex) {
+        tempQueue.splice(i, 1);
+        setVideoQueue([...tempQueue]);
+        break;
+      }
+    }
+    setCurrentUrl('http://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1');
+    setSelectedIndex(null);
+    setSnackbar(true);
+    // otherwise, push back info to the applicable index
+    // else {
+    //   var newIndex;
+    //   var newUrl;
+
+    //   if (selectedIndex === videoQueue.length - 1) newIndex = selectedIndex - 1;
+    //   else newIndex = selectedIndex;
+
+    //   var tempQueue = videoQueue;
+    //   for (var i = 0; i < videoQueue.length; i++) {
+    //     if (i === selectedIndex) {
+    //       newUrl = `http://www.youtube.com/embed/${videoQueue[i].yid}?rel=0&hd=1`;
+    //       tempQueue.splice(i, 1);
+    //       selectVideo(newUrl, newIndex);
+    //       setVideoQueue([...tempQueue]);
+    //       break;
+    //     }
+    //   }
+    // }
+  }
 
   return (
     <>
@@ -137,7 +174,7 @@ function MyDesk() {
               </Paper>
             </form>
             <ul className={styles.urlList}>
-              {videoQueue.length > 0 ? (
+              {videoQueue.length > 0 &&
                 videoQueue.map((video, index) => (
                   <li className={styles.urlListItem} key={index}>
                     <Fab
@@ -158,21 +195,27 @@ function MyDesk() {
                     </Fab>
                     <p>{`${video.title} By ${video.author_name}`}</p>
                   </li>
-                ))
-              ) : (
-                <p>no videos</p>
-              )}
+                ))}
             </ul>
           </Paper>
           <Paper elevation={5} className={styles.doneContainer}>
-            <div className={styles.doneContent}>
-              <Tooltip title="Remove video">
-                <IconButton aria-label="delete" onClick={() => removeVideo()}>
-                  <DeleteIcon />
+            {videoQueue.length > 0 ? (
+              <div className={styles.doneContent}>
+                <Tooltip title="Remove video">
+                  <IconButton aria-label="delete" onClick={() => removeVideo()}>
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+                <h2>Done watching this video?</h2>
+              </div>
+            ) : (
+              <div className={styles.doneContent}>
+                <IconButton aria-label="start">
+                  <GolfCourseIcon />
                 </IconButton>
-              </Tooltip>
-              <h2>Done watching this video?</h2>
-            </div>
+                <h2>Add a couple of vidoes to get started!</h2>
+              </div>
+            )}
           </Paper>
         </div>
       </div>
