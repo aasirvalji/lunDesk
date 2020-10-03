@@ -6,11 +6,12 @@
 
 .LapTimeList__listwrap {
   max-width: 270px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .LapTimeList__headers {
   width: 100%;
+  background-color: rebeccapurple;
 }
 
 .LapTimeList__headers span {

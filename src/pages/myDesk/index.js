@@ -218,9 +218,9 @@ function MyDesk() {
           </Paper>
         </div>
       </div>
-
-      <Stopwatch />
-
+      <Paper elevation={5} className={styles.stopwatchContainer}>
+        <Stopwatch />
+      </Paper>
       {/* message display components */}
       <ErrorModal
         isOpen={errorModal}

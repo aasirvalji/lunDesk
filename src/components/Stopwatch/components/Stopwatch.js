@@ -68,7 +68,7 @@ class Stopwatch extends Component {
 
     return (
       <div className="Stopwatch">
-        <h1>Simple Stopwatch App</h1>
+        {/* <h1>Simple Stopwatch App</h1> */}
 
         <Timer time={time} />
 

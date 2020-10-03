@@ -51,7 +51,7 @@ class Controls extends Component {
           ref="lapBtn"
         >
           {' '}
-          Lap Time{' '}
+          Checkpoint Time{' '}
         </button>
       </div>
     );

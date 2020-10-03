@@ -19,9 +19,11 @@ class LapTimeList extends Component {
     return (
       <div className="LapTimeList">
         <div className="LapTimeList__listwrap">
-          <div className="LapTimeList__headers">
-            <span> Lap </span> <span> Time </span>
-          </div>
+          {timeList.length > 0 && (
+            <div className="LapTimeList__headers">
+              <span> Checkpoint </span> <span> Time </span>
+            </div>
+          )}
 
           <ul className="LapTimeList__list">
             {timeList.map((time, index) => {
