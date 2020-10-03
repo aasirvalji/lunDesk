@@ -17,6 +17,12 @@ import Tooltip from '@material-ui/core/Tooltip';
 import GolfCourseIcon from '@material-ui/icons/GolfCourse';
 import TimerOffIcon from '@material-ui/icons/TimerOff';
 import TimerIcon from '@material-ui/icons/Timer';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import Favorite from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
 function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
@@ -28,6 +34,7 @@ function MyDesk() {
   const [errorMessage, setErrorMessage] = useState(['', '']);
   const [snackbar, setSnackbar] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const [stopWatch, setStopwatch] = useState(true);
 
   // tab change handler
   const handleTabChange = (e) => {
@@ -177,7 +184,11 @@ function MyDesk() {
           <Paper elevation={10} className={styles.vidContainer}>
             <form onSubmit={onSubmit}>
               <Paper elevation={5} className={styles.root}>
-                <IconButton className={styles.iconButton} aria-label="menu">
+                <IconButton
+                  className={styles.iconButton}
+                  aria-label="menu"
+                  disabled
+                >
                   <YouTubeIcon />
                 </IconButton>
                 <InputBase
@@ -185,7 +196,7 @@ function MyDesk() {
                   placeholder="Enter Youtube Url"
                   onChange={(e) => setUrlInput(e.target.value)}
                 />
-                <IconButton type="submit" aria-label="search">
+                <IconButton type="submit" aria-label="search" disabled>
                   <SearchIcon />
                 </IconButton>
               </Paper>
@@ -227,7 +238,7 @@ function MyDesk() {
               </div>
             ) : (
               <div className={styles.doneContent}>
-                <IconButton aria-label="start">
+                <IconButton aria-label="start" disabled>
                   <GolfCourseIcon />
                 </IconButton>
                 <h2>Add a couple of vidoes to get started!</h2>
@@ -267,7 +278,29 @@ function MyDesk() {
               <h2>Control Panel</h2>
             </>
           </div>
-          <Stopwatch />
+          <div className={styles.controlOptions}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={stopWatch}
+                  onChange={() => setStopwatch(!stopWatch)}
+                  name="checkedA"
+                />
+              }
+              className={styles.stopwatchControl}
+              label="Enable stopwatch"
+            />
+          </div>
+          {stopWatch && (
+            <>
+              <Paper elevation={5}>
+                <div className={styles.stopwatchContainer}>
+                  <TimerIcon className={styles.stopwatchIcon} />
+                  <Stopwatch />
+                </div>
+              </Paper>
+            </>
+          )}
         </Paper>
       </div>
       {/* message display components */}

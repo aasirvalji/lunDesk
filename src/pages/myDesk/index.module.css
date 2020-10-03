@@ -20,6 +20,11 @@
   grid-column: 2/3;
 }
 
+.box3 {
+  width: 90%;
+  margin: auto;
+}
+
 .vidContainer {
   padding: 1.92rem 0rem 1.4rem 0rem;
   margin-bottom: 2rem;
@@ -111,10 +116,7 @@
   align-items: center;
 }
 
-.box3 {
-  width: 90%;
-  margin: auto;
-}
+/* control panel */
 
 .hiddenControls {
   text-align: center;
@@ -136,15 +138,18 @@
 .controlsHeader {
   display: flex;
   justify-content: center;
-  transform: translateX(-1rem);
+  transform: translateX(-0.7rem);
 }
 
-.show {
-  opacity: 1;
-  transition: opacity 1500ms;
+.controlOptions {
+  text-align: center;
 }
 
-.hide {
-  opacity: 0;
-  transition: opacity 1ms;
+.stopwatchContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.stopwatchIcon {
+  margin: auto;
 }
