@@ -15,6 +15,8 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
 import GolfCourseIcon from '@material-ui/icons/GolfCourse';
+import TimerOffIcon from '@material-ui/icons/TimerOff';
+import TimerIcon from '@material-ui/icons/Timer';
 
 function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
@@ -57,11 +59,6 @@ function MyDesk() {
     }
   }
 
-  // error modal handler
-  function closeModal() {
-    setErrorModal(false);
-  }
-
   // api call to fetch video information
   async function getVideoName(url, yid) {
     const res = await fetch(url, { method: 'GET' });
@@ -98,6 +95,11 @@ function MyDesk() {
     // custom form handling here
   };
 
+  // error modal handler
+  function closeModal() {
+    setErrorModal(false);
+  }
+
   // snack bar handler
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -106,6 +108,22 @@ function MyDesk() {
 
     setSnackbar(false);
   };
+
+  function showControlPanel() {
+    var y = document.getElementById('hide-control');
+    y.style.display = 'none';
+
+    var x = document.getElementById('show-control');
+    x.style.display = 'block';
+  }
+
+  function hideControlPanel() {
+    var x = document.getElementById('show-control');
+    x.style.display = 'none';
+
+    var y = document.getElementById('hide-control');
+    y.style.display = 'block';
+  }
 
   // set video in progress
   function selectVideo(url, index) {
@@ -218,9 +236,40 @@ function MyDesk() {
           </Paper>
         </div>
       </div>
-      <Paper elevation={5} className={styles.stopwatchContainer}>
-        <Stopwatch />
-      </Paper>
+      <div className={styles.box3}>
+        <Paper
+          elevation={5}
+          className={styles.hiddenControls}
+          id="hide-control"
+          style={{ display: 'none' }}
+        >
+          {/* <Tooltip title="Show control panel"> */}
+          <IconButton aria-label="delete" onClick={() => showControlPanel()}>
+            <TimerIcon />
+          </IconButton>
+          {/* </Tooltip> */}
+        </Paper>
+        <Paper
+          elevation={5}
+          className={styles.controlsContainer}
+          id="show-control"
+        >
+          <div className={styles.controlsHeader}>
+            <>
+              {/* <Tooltip title="Hide control panel"> */}
+              <IconButton
+                aria-label="delete"
+                onClick={() => hideControlPanel()}
+              >
+                <TimerOffIcon />
+              </IconButton>
+              {/* </Tooltip> */}
+              <h2>Control Panel</h2>
+            </>
+          </div>
+          <Stopwatch />
+        </Paper>
+      </div>
       {/* message display components */}
       <ErrorModal
         isOpen={errorModal}

@@ -1,1 +1,7 @@
 /* global style sheet */
+
+/* temporary fix to scrollbar pushing content */
+html {
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: scroll;
+}

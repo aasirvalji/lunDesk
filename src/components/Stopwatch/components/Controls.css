@@ -1,5 +1,6 @@
 .Controls {
-  /* text-align: center; */
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .Controls__button {

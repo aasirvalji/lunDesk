@@ -111,7 +111,40 @@
   align-items: center;
 }
 
-.stopwatchContainer {
+.box3 {
   width: 90%;
   margin: auto;
+}
+
+.hiddenControls {
+  text-align: center;
+  margin-top: 2.2rem;
+  padding: 1rem;
+  width: 15rem;
+}
+
+.controlsContainer {
+  margin-top: 2.2rem;
+  padding: 1rem;
+  width: 25rem;
+}
+
+.controlsContainer > h2 {
+  text-align: center;
+}
+
+.controlsHeader {
+  display: flex;
+  justify-content: center;
+  transform: translateX(-1rem);
+}
+
+.show {
+  opacity: 1;
+  transition: opacity 1500ms;
+}
+
+.hide {
+  opacity: 0;
+  transition: opacity 1ms;
 }

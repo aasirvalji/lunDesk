@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Controls.css';
+import Button from '@material-ui/core/Button';
 
 class Controls extends Component {
   static proptTypes = {
@@ -21,30 +22,46 @@ class Controls extends Component {
     return (
       <div className="Controls">
         {!isRunning ? (
-          <button onClick={start} className="Controls__button" ref="startBtn">
+          <Button
+            onClick={start}
+            className="Controls__button"
+            ref="startBtn"
+            variant="contained"
+            color="secondary"
+          >
             {' '}
             Start{' '}
-          </button>
+          </Button>
         ) : null}
 
         {isRunning ? (
-          <button onClick={stop} className="Controls__button" ref="stopBtn">
+          <Button
+            onClick={stop}
+            className="Controls__button"
+            ref="stopBtn"
+            variant="contained"
+            color="secondary"
+          >
             {' '}
             Stop{' '}
-          </button>
+          </Button>
         ) : null}
 
-        <button
+        <Button
           onClick={reset}
           disabled={isRunning}
           className="Controls__button"
           ref="resetBtn"
+          variant="contained"
+          color="secondary"
         >
           {' '}
           Reset{' '}
-        </button>
+        </Button>
 
-        <button
+        <Button
+          variant="contained"
+          color="secondary"
           onClick={addLapTime}
           disabled={!isRunning}
           className="Controls__button"
@@ -52,7 +69,7 @@ class Controls extends Component {
         >
           {' '}
           Checkpoint Time{' '}
-        </button>
+        </Button>
       </div>
     );
   }
