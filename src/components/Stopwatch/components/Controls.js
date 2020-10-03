@@ -68,7 +68,7 @@ class Controls extends Component {
           ref="lapBtn"
         >
           {' '}
-          Checkpoint Time{' '}
+          Create Checkpoint{' '}
         </Button>
       </div>
     );

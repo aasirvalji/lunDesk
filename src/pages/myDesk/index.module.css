@@ -94,10 +94,6 @@
   color: white;
 }
 
-#editIcon {
-  width: 50%;
-}
-
 .urlListItem p {
   padding: 0% 2%;
 }
@@ -138,7 +134,13 @@
 .controlsHeader {
   display: flex;
   justify-content: center;
+  align-items: center;
   transform: translateX(-0.7rem);
+}
+
+.controlsHeader > .gridOffButton {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .controlOptions {
@@ -148,8 +150,22 @@
 .stopwatchContainer {
   display: flex;
   flex-direction: column;
+  max-height: 20rem;
+  margin: 2rem 0rem;
+  overflow-y: scroll;
+}
+
+.stopwatchContainer {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+.stopwatchContainer::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
 }
 
 .stopwatchIcon {
   margin: auto;
+  padding: 1rem 0rem;
 }

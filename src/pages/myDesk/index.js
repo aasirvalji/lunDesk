@@ -12,17 +12,16 @@ import YouTubeIcon from '@material-ui/icons/YouTube';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import Tooltip from '@material-ui/core/Tooltip';
 import GolfCourseIcon from '@material-ui/icons/GolfCourse';
+import GridOnIcon from '@material-ui/icons/GridOn';
+import GridOffIcon from '@material-ui/icons/GridOff';
 import TimerOffIcon from '@material-ui/icons/TimerOff';
 import TimerIcon from '@material-ui/icons/Timer';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import Favorite from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import TouchAppIcon from '@material-ui/icons/TouchApp';
 
 function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
@@ -35,6 +34,8 @@ function MyDesk() {
   const [snackbar, setSnackbar] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [stopWatch, setStopwatch] = useState(true);
+
+  const defaultUrl = 'http://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1';
 
   // tab change handler
   const handleTabChange = (e) => {
@@ -196,7 +197,7 @@ function MyDesk() {
                   placeholder="Enter Youtube Url"
                   onChange={(e) => setUrlInput(e.target.value)}
                 />
-                <IconButton type="submit" aria-label="search" disabled>
+                <IconButton type="submit" aria-label="search">
                   <SearchIcon />
                 </IconButton>
               </Paper>
@@ -216,10 +217,7 @@ function MyDesk() {
                         )
                       }
                     >
-                      <PlayArrowIcon
-                        id={styles.editIcon}
-                        className={styles.editIcon}
-                      />
+                      <PlayArrowIcon className={styles.editIcon} />
                     </Fab>
                     <p>{`${video.title} By ${video.author_name}`}</p>
                   </li>
@@ -227,14 +225,21 @@ function MyDesk() {
             </ul>
           </Paper>
           <Paper elevation={5} className={styles.doneContainer}>
-            {videoQueue.length > 0 ? (
+            {videoQueue.length > 0 && currentUrl === defaultUrl ? (
+              <div className={styles.doneContent}>
+                <IconButton aria-label="delete" disabled>
+                  <TouchAppIcon />
+                </IconButton>
+                <h2>Select a video to get started!</h2>
+              </div>
+            ) : videoQueue.length > 0 && currentUrl !== defaultUrl ? (
               <div className={styles.doneContent}>
                 <Tooltip title="Remove video">
                   <IconButton aria-label="delete" onClick={() => removeVideo()}>
-                    <DeleteIcon />
+                    <DoneOutlineIcon />
                   </IconButton>
                 </Tooltip>
-                <h2>Done watching this video?</h2>
+                <h2>Done watching?</h2>
               </div>
             ) : (
               <div className={styles.doneContent}>
@@ -252,11 +257,10 @@ function MyDesk() {
           elevation={5}
           className={styles.hiddenControls}
           id="hide-control"
-          style={{ display: 'none' }}
         >
           {/* <Tooltip title="Show control panel"> */}
           <IconButton aria-label="delete" onClick={() => showControlPanel()}>
-            <TimerIcon />
+            <GridOnIcon />
           </IconButton>
           {/* </Tooltip> */}
         </Paper>
@@ -264,6 +268,7 @@ function MyDesk() {
           elevation={5}
           className={styles.controlsContainer}
           id="show-control"
+          style={{ display: 'none' }}
         >
           <div className={styles.controlsHeader}>
             <>
@@ -271,8 +276,9 @@ function MyDesk() {
               <IconButton
                 aria-label="delete"
                 onClick={() => hideControlPanel()}
+                className={styles.gridOffButton}
               >
-                <TimerOffIcon />
+                <GridOffIcon />
               </IconButton>
               {/* </Tooltip> */}
               <h2>Control Panel</h2>
