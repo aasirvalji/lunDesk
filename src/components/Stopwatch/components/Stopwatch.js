@@ -4,14 +4,22 @@ import './Stopwatch.css';
 import Timer from './Timer';
 import Controls from './Controls';
 import LapTimeList from './LapTimeList';
-
 import Config from '../constants/Config';
+
+// material ui imports
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 function getDefaultState() {
   return {
     isRunning: false,
     time: 0,
     timeList: [],
+    errorModalOpen: false,
   };
 }
 
@@ -58,8 +66,28 @@ class Stopwatch extends Component {
   addLapTime() {
     const { time, timeList } = this.state;
 
+    if (timeList.length >= 1000) {
+      this.setState({
+        errorModalOpen: true,
+      });
+
+      var tempList = timeList;
+      tempList.shift();
+      tempList.push(time);
+      this.setState({
+        timeList: tempList,
+      });
+    } else {
+      this.setState({
+        timeList: [...timeList, time],
+      });
+    }
+  }
+
+  /* misc functions */
+  closeModal() {
     this.setState({
-      timeList: [...timeList, time],
+      errorModalOpen: false,
     });
   }
 
@@ -81,6 +109,26 @@ class Stopwatch extends Component {
         />
 
         <LapTimeList timeList={timeList} />
+
+        <Dialog
+          open={this.state.errorModalOpen}
+          onClose={() => this.closeModal()}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Checkpoint Warning</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              The checkpoint limit is 1000. Your oldest checkpoints will be
+              replaced until a new session is started.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => this.closeModal()} color="primary" autoFocus>
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
