@@ -28,28 +28,52 @@ function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
   const [urlInput, setUrlInput] = useState('');
   const [currentUrl, setCurrentUrl] = useState(
-    'http://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1'
+    'https://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1'
   );
   const [errorModal, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState(['', '']);
   const [snackbar, setSnackbar] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [stopWatch, setStopwatch] = useState(true);
-  const [watchMode, setWatchMode] = useState(true);
-  const [activeSession, setActiveSession] = useState([0, 0]);
-  const [awaySession, setAwaySession] = useState([0, 0]);
+  const [watchMode, setWatchMode] = useState(false);
+  const [activeSession, setActiveSession] = useState(0);
+  const [awaySession, setAwaySession] = useState(0);
 
-  const defaultUrl = 'http://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1';
+  const defaultUrl = 'https://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1';
 
   // tab change handler
   const handleTabChange = (e) => {
-    if (document.visibilityState === 'visible') {
-      console.log('tab is activate');
-    } else {
-      console.log('tab is inactive');
-      setActiveSession([...activeSession, getTime()]);
-      setErrorModal(true);
-      setErrorMessage(['Left', `You were away for ${activeSession[0]}`]);
+    if (watchMode) {
+      if (document.visibilityState === 'visible') {
+        console.log('tab is activate');
+        // set up new active session
+        setActiveSession(getTime());
+
+        // conclude away session
+        var session = getTime() - awaySession;
+        console.log(session);
+        var away = new Date(session * 1000).toISOString().substr(11, 8);
+
+        // using @# as a custom line break
+        var messageBody = `Your previous session was ${errorMessage[1]} long.@#You were away for ${away}.`;
+
+        setErrorMessage(["You've left this tab", messageBody]);
+
+        // if modal isn't already opened
+        if (!errorModal) {
+          setErrorModal(true);
+        }
+      } else {
+        // set up away session
+        var current = getTime();
+        setAwaySession(current);
+
+        // conclude active session
+        var session = current - activeSession;
+        console.log(activeSession, current, session);
+        var active = new Date(session * 1000).toISOString().substr(11, 8);
+        setErrorMessage(['Placeholder', `${active}`]);
+      }
     }
   };
 
@@ -168,18 +192,24 @@ function MyDesk() {
         break;
       }
     }
-    setCurrentUrl('http://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1');
+    setCurrentUrl('https://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1');
     setSelectedIndex(null);
     setSnackbar(true);
   }
 
   function setStartTime() {
-    setActiveSession([getTime(), 0]);
+    setActiveSession(getTime());
   }
 
   // returns seconds since midnight, 1 Jan 1970
   function getTime() {
+    console.log('get time called');
     return Math.floor(new Date().getTime() / 1000);
+  }
+
+  function changeWatchMode() {
+    if (!watchMode) setStartTime();
+    setWatchMode(!watchMode);
   }
 
   return (
@@ -228,7 +258,7 @@ function MyDesk() {
                       id={`fab-${index}`}
                       onClick={() =>
                         selectVideo(
-                          `http://www.youtube.com/embed/${video.yid}?rel=0&hd=1`,
+                          `https://www.youtube.com/embed/${video.yid}?rel=0&hd=1`,
                           index
                         )
                       }
@@ -310,18 +340,18 @@ function MyDesk() {
                 />
               }
               className={styles.stopwatchControl}
-              label="Enable watch mode"
+              label="Enable stopwatch"
             />
             <FormControlLabel
               control={
                 <Checkbox
                   checked={watchMode}
-                  onChange={() => setWatchMode(!watchMode)}
+                  onChange={() => changeWatchMode()}
                   name="checkedA"
                 />
               }
               className={styles.stopwatchControl}
-              label="Enable stopwatch"
+              label="Enable watch mode"
             />
           </div>
           {watchMode && (
@@ -329,10 +359,7 @@ function MyDesk() {
               <div className={styles.watchModeContainer}>
                 <DvrIcon className={styles.stopwatchIcon} />
                 <p>Watch mode allows you to do xyz</p>
-                <div className={styles.watchMode}>
-                  <Stopwatch className={styles.watchMode} />
-                </div>
-                <button onClick={() => setStartTime()}>Click</button>
+                {/* <button onClick={() => setStartTime()}>Click</button> */}
               </div>
             </Paper>
           )}

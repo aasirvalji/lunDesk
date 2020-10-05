@@ -5,6 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+// import Typography from '@material-ui/core/Typography';
 
 export default function AlertDialog({ isOpen, closeModal, header, body }) {
   return (
@@ -19,7 +20,13 @@ export default function AlertDialog({ isOpen, closeModal, header, body }) {
         <DialogTitle id="alert-dialog-title">{header}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {body}
+            {body.includes('@#') ? (
+              body.split('@#').map((line) => {
+                return <p>{line}</p>;
+              })
+            ) : (
+              <p>{body}</p>
+            )}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
