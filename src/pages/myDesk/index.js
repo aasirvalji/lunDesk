@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './index.module.css';
 import ErrorModal from '../../components/ErrorModal/index';
 import Snackbar from '../../components/Snackbar/index';
@@ -25,10 +25,6 @@ import TouchAppIcon from '@material-ui/icons/TouchApp';
 import DvrIcon from '@material-ui/icons/Dvr';
 
 function MyDesk() {
-  // In order to gain access to the child component instance,
-  // you need to assign it to a `ref`, so we call `useRef()` to get one
-  const childRef = useRef();
-
   const [videoQueue, setVideoQueue] = useState([]);
   const [urlInput, setUrlInput] = useState('');
   const [currentUrl, setCurrentUrl] = useState(
@@ -40,6 +36,8 @@ function MyDesk() {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [stopWatch, setStopwatch] = useState(true);
   const [watchMode, setWatchMode] = useState(true);
+  const [activeSession, setActiveSession] = useState([0, 0]);
+  const [awaySession, setAwaySession] = useState([0, 0]);
 
   const defaultUrl = 'http://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1';
 
@@ -49,6 +47,9 @@ function MyDesk() {
       console.log('tab is activate');
     } else {
       console.log('tab is inactive');
+      setActiveSession([...activeSession, getTime()]);
+      setErrorModal(true);
+      setErrorMessage(['Left', `You were away for ${activeSession[0]}`]);
     }
   };
 
@@ -172,8 +173,13 @@ function MyDesk() {
     setSnackbar(true);
   }
 
-  function test() {
-    childRef.current.getAlert();
+  function setStartTime() {
+    setActiveSession([getTime(), 0]);
+  }
+
+  // returns seconds since midnight, 1 Jan 1970
+  function getTime() {
+    return Math.floor(new Date().getTime() / 1000);
   }
 
   return (
@@ -324,9 +330,9 @@ function MyDesk() {
                 <DvrIcon className={styles.stopwatchIcon} />
                 <p>Watch mode allows you to do xyz</p>
                 <div className={styles.watchMode}>
-                  <Stopwatch className={styles.watchMode} ref={childRef} />
+                  <Stopwatch className={styles.watchMode} />
                 </div>
-                <button onClick={() => test()}>Click</button>
+                <button onClick={() => setStartTime()}>Click</button>
               </div>
             </Paper>
           )}
