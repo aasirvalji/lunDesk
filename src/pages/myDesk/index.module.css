@@ -147,11 +147,15 @@
   text-align: center;
 }
 
-.stopwatchContainer {
+.stopwatchContainer,
+.watchModeContainer {
   display: flex;
   flex-direction: column;
   max-height: 20rem;
   margin: 2rem 0rem;
+}
+
+.stopwatchContainer {
   overflow-y: scroll;
 }
 
@@ -168,4 +172,13 @@
 .stopwatchIcon {
   margin: auto;
   padding: 1rem 0rem;
+}
+
+.watchModeContainer > p {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.watchMode {
+  display: none;
 }

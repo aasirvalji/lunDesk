@@ -22,6 +22,7 @@ import TimerIcon from '@material-ui/icons/Timer';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import TouchAppIcon from '@material-ui/icons/TouchApp';
+import DvrIcon from '@material-ui/icons/Dvr';
 
 function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
@@ -34,6 +35,7 @@ function MyDesk() {
   const [snackbar, setSnackbar] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [stopWatch, setStopwatch] = useState(true);
+  const [watchMode, setWatchMode] = useState(true);
 
   const defaultUrl = 'http://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1';
 
@@ -294,9 +296,31 @@ function MyDesk() {
                 />
               }
               className={styles.stopwatchControl}
+              label="Enable watch mode"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={watchMode}
+                  onChange={() => setWatchMode(!watchMode)}
+                  name="checkedA"
+                />
+              }
+              className={styles.stopwatchControl}
               label="Enable stopwatch"
             />
           </div>
+          {watchMode && (
+            <Paper elevation={5}>
+              <div className={styles.watchModeContainer}>
+                <DvrIcon className={styles.stopwatchIcon} />
+                <p>Watch mode allows you to do xyz</p>
+                <div className={styles.watchMode}>
+                  <Stopwatch className={styles.watchMode} />
+                </div>
+              </div>
+            </Paper>
+          )}
           {stopWatch && (
             <>
               <Paper elevation={5}>
