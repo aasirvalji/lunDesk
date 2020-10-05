@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import './Stopwatch.css';
 
 import Timer from './Timer';
@@ -28,6 +29,10 @@ class Stopwatch extends Component {
     super(props);
     this.state = getDefaultState();
     this.timerRef = null;
+  }
+
+  getAlert() {
+    alert('getAlert from Child');
   }
 
   updateTimer(extraTime) {

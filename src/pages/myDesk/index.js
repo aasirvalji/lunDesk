@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './index.module.css';
 import ErrorModal from '../../components/ErrorModal/index';
 import Snackbar from '../../components/Snackbar/index';
@@ -25,6 +25,10 @@ import TouchAppIcon from '@material-ui/icons/TouchApp';
 import DvrIcon from '@material-ui/icons/Dvr';
 
 function MyDesk() {
+  // In order to gain access to the child component instance,
+  // you need to assign it to a `ref`, so we call `useRef()` to get one
+  const childRef = useRef();
+
   const [videoQueue, setVideoQueue] = useState([]);
   const [urlInput, setUrlInput] = useState('');
   const [currentUrl, setCurrentUrl] = useState(
@@ -166,6 +170,10 @@ function MyDesk() {
     setCurrentUrl('http://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1');
     setSelectedIndex(null);
     setSnackbar(true);
+  }
+
+  function test() {
+    childRef.current.getAlert();
   }
 
   return (
@@ -316,8 +324,9 @@ function MyDesk() {
                 <DvrIcon className={styles.stopwatchIcon} />
                 <p>Watch mode allows you to do xyz</p>
                 <div className={styles.watchMode}>
-                  <Stopwatch className={styles.watchMode} />
+                  <Stopwatch className={styles.watchMode} ref={childRef} />
                 </div>
+                <button onClick={() => test()}>Click</button>
               </div>
             </Paper>
           )}
