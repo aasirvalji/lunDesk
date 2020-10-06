@@ -3,10 +3,9 @@
   justify-content: space-evenly;
 }
 
-.Controls__button {
-  padding: 10px;
-  width: auto;
+.Controls .controlsButton {
+  min-width: 10%;
   cursor: pointer;
-  margin: 0px 2px;
+  margin: 0px 0px;
   white-space: nowrap;
 }

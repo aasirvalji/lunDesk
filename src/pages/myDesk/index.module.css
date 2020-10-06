@@ -83,8 +83,9 @@
 .urlList {
   width: 80%;
   margin: auto;
+  margin-top: 0.5rem;
   list-style: none;
-  background-color: orange;
+  /* background-color: orange; */
 }
 
 .urlListItem {
@@ -94,7 +95,7 @@
   transform: translateX(-1.4rem);
   width: 100%;
   margin: auto;
-  background-color: gray;
+  /* background-color: gray; */
 }
 
 .urlListItem > .fabButton {
@@ -106,10 +107,10 @@
 
 .urlListItem p {
   padding: 0% 2%;
-  background-color: yellow;
+  /* background-color: yellow; */
   font-size: 0.7rem;
   width: 70%;
-  text-align: right;
+  text-align: left;
 }
 
 /* on screen interaction prompt */
@@ -201,6 +202,16 @@
 }
 
 @media only screen and (max-width: 1300px) {
+  /* control panel */
+  .hiddenControls {
+    width: 10rem;
+  }
+
+  .controlsContainer {
+    width: 45%;
+    max-width: 22rem;
+  }
+
   .urlListItem > .fabButton {
     width: 2rem;
     height: 2rem;

@@ -24,7 +24,7 @@ class Controls extends Component {
         {!isRunning ? (
           <Button
             onClick={start}
-            className="Controls__button"
+            className="controlsButton"
             ref="startBtn"
             variant="contained"
             color="secondary"
@@ -37,7 +37,7 @@ class Controls extends Component {
         {isRunning ? (
           <Button
             onClick={stop}
-            className="Controls__button"
+            className="controlsButton"
             ref="stopBtn"
             variant="contained"
             color="secondary"
@@ -50,7 +50,7 @@ class Controls extends Component {
         <Button
           onClick={reset}
           disabled={isRunning}
-          className="Controls__button"
+          className="controlsButton"
           ref="resetBtn"
           variant="contained"
           color="secondary"
@@ -64,7 +64,7 @@ class Controls extends Component {
           color="secondary"
           onClick={addLapTime}
           disabled={!isRunning}
-          className="Controls__button"
+          className="controlsButton"
           ref="lapBtn"
         >
           {' '}
