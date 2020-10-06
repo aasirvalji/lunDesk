@@ -84,7 +84,7 @@ function MyDesk() {
       // unsubscribe event
       document.removeEventListener('visibilitychange', handleTabChange);
     };
-  }, [handleTabChange]);
+  }, [handleTabChange, videoQueue]);
 
   // validate youtube url and get id
   function getYTId(url) {
@@ -113,6 +113,18 @@ function MyDesk() {
           title: res.title,
         };
         setVideoQueue((prevVideoQueue) => [videoDetails, ...prevVideoQueue]);
+        console.log('reached', selectedIndex, videoQueue);
+
+        // if a video is currently selected, move green marker to next play button in queue
+        if (selectedIndex !== null) {
+          document.getElementById(
+            `fab-${selectedIndex}`
+          ).style.backgroundColor = '#B20000';
+          document.getElementById(
+            `fab-${selectedIndex + 1}`
+          ).style.backgroundColor = '#2ECC40';
+          setSelectedIndex(selectedIndex + 1);
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -192,6 +204,11 @@ function MyDesk() {
         break;
       }
     }
+
+    // remove green marker from current video
+    document.getElementById(`fab-${selectedIndex}`).style.backgroundColor =
+      '#B20000';
+
     setCurrentUrl('https://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1');
     setSelectedIndex(null);
     setSnackbar(true);
@@ -358,7 +375,10 @@ function MyDesk() {
             <Paper elevation={5}>
               <div className={styles.watchModeContainer}>
                 <DvrIcon className={styles.stopwatchIcon} />
-                <p>Watch mode allows you to do xyz</p>
+                <p>
+                  myDesk notifies you about how long you were studying for and
+                  how you left when you switch to another tab/window
+                </p>
                 {/* <button onClick={() => setStartTime()}>Click</button> */}
               </div>
             </Paper>

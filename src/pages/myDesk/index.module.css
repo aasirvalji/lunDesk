@@ -78,24 +78,35 @@
 /* result list */
 
 .urlList {
-  width: 100%;
+  width: 80%;
+  margin: auto;
   list-style: none;
+  background-color: orange;
 }
 
 .urlListItem {
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
+  transform: translateX(-1.4rem);
+  width: 100%;
+  margin: auto;
+  background-color: gray;
 }
 
 .urlListItem > .fabButton {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.7rem;
+  height: 2.7rem;
   background-color: #b20000;
   color: white;
 }
 
 .urlListItem p {
   padding: 0% 2%;
+  background-color: yellow;
+  font-size: 0.7rem;
+  width: 70%;
+  text-align: right;
 }
 
 .doneContainer {
@@ -177,6 +188,9 @@
 .watchModeContainer > p {
   font-size: 0.8rem;
   text-align: center;
+  width: 70%;
+  margin: auto;
+  padding-bottom: 1rem;
 }
 
 .watchMode {
