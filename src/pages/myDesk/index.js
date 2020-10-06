@@ -371,86 +371,90 @@ function MyDesk() {
             )}
           </Paper>
         </div>
-      </div>
-      <div className={styles.box3}>
-        <Paper
-          elevation={5}
-          className={styles.hiddenControls}
-          id="hide-control"
-        >
-          {/* <Tooltip title="Show control panel"> */}
-          <IconButton aria-label="delete" onClick={() => showControlPanel()}>
-            <GridOnIcon />
-          </IconButton>
-          {/* </Tooltip> */}
-        </Paper>
-        <Paper
-          elevation={5}
-          className={styles.controlsContainer}
-          id="show-control"
-          style={{ display: 'none' }}
-        >
-          <div className={styles.controlsHeader}>
-            <>
-              {/* <Tooltip title="Hide control panel"> */}
-              <IconButton
-                aria-label="delete"
-                onClick={() => hideControlPanel()}
-                className={styles.gridOffButton}
-              >
-                <GridOffIcon />
-              </IconButton>
-              {/* </Tooltip> */}
-              <h2>Control Panel</h2>
-            </>
-          </div>
-          <div className={styles.controlOptions}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={stopWatch}
-                  onChange={() => setStopwatch(!stopWatch)}
-                  name="checkedA"
-                />
-              }
-              className={styles.stopwatchControl}
-              label="Enable stopwatch"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={watchMode}
-                  onChange={() => changeWatchMode()}
-                  name="checkedA"
-                />
-              }
-              className={styles.stopwatchControl}
-              label="Enable watch mode"
-            />
-          </div>
-          {watchMode && (
-            <Paper elevation={5}>
-              <div className={styles.watchModeContainer}>
-                <DvrIcon className={styles.stopwatchIcon} />
-                <p>
-                  myDesk notifies you about how long you were studying for and
-                  how you left when you switch to another tab/window
-                </p>
-                {/* <button onClick={() => setStartTime()}>Click</button> */}
-              </div>
-            </Paper>
-          )}
-          {stopWatch && (
-            <>
+        <div className={styles.box3}>
+          <Paper
+            elevation={5}
+            className={styles.hiddenControls}
+            id="hide-control"
+          >
+            {/* <Tooltip title="Show control panel"> */}
+            <IconButton aria-label="delete" onClick={() => showControlPanel()}>
+              <GridOnIcon />
+            </IconButton>
+            {/* </Tooltip> */}
+          </Paper>
+          <Paper
+            elevation={5}
+            className={styles.controlsContainer}
+            id="show-control"
+            style={{ display: 'none' }}
+          >
+            <div className={styles.controlsHeader}>
+              <>
+                {/* <Tooltip title="Hide control panel"> */}
+                <IconButton
+                  aria-label="delete"
+                  onClick={() => hideControlPanel()}
+                  className={styles.gridOffButton}
+                >
+                  <GridOffIcon />
+                </IconButton>
+                {/* </Tooltip> */}
+                <h2>Control Panel</h2>
+              </>
+            </div>
+            <div className={styles.controlOptions}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stopWatch}
+                    onChange={() => setStopwatch(!stopWatch)}
+                    name="checkedA"
+                  />
+                }
+                className={styles.stopwatchControl}
+                label={
+                  <p className={styles.formControlText}>Enable stopwatch</p>
+                }
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={watchMode}
+                    onChange={() => changeWatchMode()}
+                    name="checkedA"
+                  />
+                }
+                className={styles.stopwatchControl}
+                label={
+                  <p className={styles.formControlText}>Enable watch mode</p>
+                }
+              />
+            </div>
+            {watchMode && (
               <Paper elevation={5}>
-                <div className={styles.stopwatchContainer}>
-                  <TimerIcon className={styles.stopwatchIcon} />
-                  <Stopwatch />
+                <div className={styles.watchModeContainer}>
+                  <DvrIcon className={styles.stopwatchIcon} />
+                  <p>
+                    myDesk notifies you about how long you were studying for and
+                    how you left when you switch to another tab/window
+                  </p>
+                  {/* <button onClick={() => setStartTime()}>Click</button> */}
                 </div>
               </Paper>
-            </>
-          )}
-        </Paper>
+            )}
+            {stopWatch && (
+              <>
+                <Paper elevation={5}>
+                  <div className={styles.stopwatchContainer}>
+                    <TimerIcon className={styles.stopwatchIcon} />
+                    <Stopwatch />
+                  </div>
+                </Paper>
+              </>
+            )}
+          </Paper>
+        </div>
       </div>
       {/* message display components */}
       <ErrorModal
