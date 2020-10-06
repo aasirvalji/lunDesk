@@ -1,3 +1,4 @@
+/* layout determinant */
 .wrapper {
   display: grid;
   margin: auto;
@@ -9,6 +10,7 @@
   align-items: stretch;
 }
 
+/* standard layout */
 .box1 {
   grid-column: 1/2;
   position: relative;
@@ -25,6 +27,25 @@
   margin: auto;
 }
 
+/* autosize video to fit screen */
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+}
+
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+    0 15px 12px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 12px 10px rgba(0, 0, 0, 0.22);
+}
+
+/* input and display container */
 .vidContainer {
   padding: 1.92rem 0rem 1.4rem 0rem;
   margin-bottom: 2rem;
@@ -44,24 +65,7 @@
   height: 0;
 }
 
-.videoWrapper {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
-  height: 0;
-}
-.videoWrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
-    0 15px 12px rgba(0, 0, 0, 0.22);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 12px 10px rgba(0, 0, 0, 0.22);
-}
-
 /* search box */
-
 .root {
   padding: 2px;
   display: flex;
@@ -76,7 +80,6 @@
 }
 
 /* result list */
-
 .urlList {
   width: 80%;
   margin: auto;
@@ -109,6 +112,7 @@
   text-align: right;
 }
 
+/* on screen interaction prompt */
 .doneContainer {
   margin-top: 1rem;
   margin: auto;
@@ -124,7 +128,6 @@
 }
 
 /* control panel */
-
 .hiddenControls {
   text-align: center;
   margin-top: 2.2rem;
@@ -195,4 +198,26 @@
 
 .watchMode {
   display: none;
+}
+
+@media only screen and (max-width: 1300px) {
+  .urlListItem > .fabButton {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .urlListItem .fabButton .editIcon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .urlListItem p {
+    font-size: 0.6rem;
+  }
+}
+
+@media only screen and (max-width: 920px) {
+  .urlListItem p {
+    font-size: 0.55rem;
+  }
 }

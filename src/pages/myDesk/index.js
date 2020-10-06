@@ -23,6 +23,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import TouchAppIcon from '@material-ui/icons/TouchApp';
 import DvrIcon from '@material-ui/icons/Dvr';
+import { SystemUpdate } from '@material-ui/icons';
 
 function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
@@ -55,7 +56,9 @@ function MyDesk() {
         var away = new Date(session * 1000).toISOString().substr(11, 8);
 
         // using @# as a custom line break
-        var messageBody = `Your previous session was ${errorMessage[1]} long.@#You were away for ${away}.`;
+        var messageBody = `Your previous session was ${formatTime(
+          errorMessage[1]
+        )} long.@#You were away for ${formatTime(away)}.`;
 
         setErrorMessage(["You've left this tab", messageBody]);
 
@@ -224,11 +227,58 @@ function MyDesk() {
     return Math.floor(new Date().getTime() / 1000);
   }
 
+  // set watch mode
   function changeWatchMode() {
     if (!watchMode) setStartTime();
     setWatchMode(!watchMode);
   }
 
+  // format time
+  function formatTime(rawTime) {
+    try {
+      if (typeof rawTime !== 'string')
+        throw 'invalid data recieved, system abort';
+
+      console.log('reached', rawTime);
+
+      var timeArr = rawTime.split(':');
+      var s = parseInt(timeArr[2]);
+      var m = parseInt(timeArr[1]);
+      var h = parseInt(timeArr[0]);
+      var valid = 0;
+
+      if (h > 0) {
+        valid++;
+        h = h === 1 ? `${h} hour` : `${h} hours`;
+      }
+
+      if (m > 0) {
+        valid++;
+        m = m === 1 ? `${m} minute` : `${m} minutes`;
+      }
+
+      if (s > 0) {
+        valid++;
+        s = s === 1 ? `${s} second` : `${s} seconds`;
+      }
+
+      if (valid === 3) return `${h}, ${m}, and ${s}`;
+      else if (valid === 2) {
+        if (!s) return `${h} and ${m}`;
+        else if (!m) return `${h} and ${s}`;
+        else return `${m} and ${s}`;
+      } else if (valid === 1) {
+        if (h) return h;
+        if (m) return m;
+        if (s) return s;
+      } else {
+        return 'less than a second';
+      }
+    } catch (e) {
+      console.log(e);
+      return;
+    }
+  }
   return (
     <>
       <div className={styles.wrapper}>
@@ -282,7 +332,14 @@ function MyDesk() {
                     >
                       <PlayArrowIcon className={styles.editIcon} />
                     </Fab>
-                    <p>{`${video.title} By ${video.author_name}`}</p>
+                    <p>
+                      {`${video.title} By ${video.author_name}`.length >= 90
+                        ? `${video.title} By ${video.author_name}`.substr(
+                            0,
+                            87
+                          ) + '...'
+                        : `${video.title} By ${video.author_name}`}
+                    </p>
                   </li>
                 ))}
             </ul>
