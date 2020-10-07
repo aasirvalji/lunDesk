@@ -101,11 +101,13 @@ function MyDesk() {
 
   // api call to fetch video information
   async function getVideoName(url, yid) {
+    // console.log(url, yid);
     const res = await fetch(url, { method: 'GET' });
     res
       .json()
       .then((res) => {
         // Fetched response
+        // console.log(res);
         const videoDetails = {
           author_name: res.author_name,
           author_url: res.author_url,
