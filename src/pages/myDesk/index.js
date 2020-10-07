@@ -408,6 +408,7 @@ function MyDesk() {
                     checked={stopWatch}
                     onChange={() => setStopwatch(!stopWatch)}
                     name="checkedA"
+                    style={{ color: '#B20000' }}
                   />
                 }
                 className={styles.stopwatchControl}
@@ -421,6 +422,7 @@ function MyDesk() {
                     checked={watchMode}
                     onChange={() => changeWatchMode()}
                     name="checkedA"
+                    style={{ color: '#B20000' }}
                   />
                 }
                 className={styles.stopwatchControl}
