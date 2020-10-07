@@ -47,13 +47,12 @@ function MyDesk() {
   const handleTabChange = (e) => {
     if (watchMode) {
       if (document.visibilityState === 'visible') {
-        console.log('tab is activate');
+        // console.log('tab is activate');
         // set up new active session
         setActiveSession(getTime());
 
         // conclude away session
         var session = getTime() - awaySession;
-        console.log(session);
         var away = new Date(session * 1000).toISOString().substr(11, 8);
 
         // using @# as a custom line break
@@ -74,7 +73,6 @@ function MyDesk() {
 
         // conclude active session
         var session = current - activeSession;
-        console.log(activeSession, current, session);
         var active = new Date(session * 1000).toISOString().substr(11, 8);
         setErrorMessage(['Placeholder', `${active}`]);
       }
@@ -94,7 +92,7 @@ function MyDesk() {
   function getYTId(url) {
     var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
-    console.log(url, match);
+    // console.log(url, match);
     if (match && match[2].length === 11) {
       return match[2];
     } else {
@@ -109,7 +107,6 @@ function MyDesk() {
       .json()
       .then((res) => {
         // Fetched response
-        console.log(res);
         const videoDetails = {
           author_name: res.author_name,
           author_url: res.author_url,
@@ -117,7 +114,7 @@ function MyDesk() {
           title: res.title,
         };
         setVideoQueue((prevVideoQueue) => [videoDetails, ...prevVideoQueue]);
-        console.log('reached', selectedIndex, videoQueue);
+        // console.log('reached', selectedIndex, videoQueue);
 
         // if a video is currently selected, move green marker to next play button in queue
         if (selectedIndex !== null) {
@@ -226,7 +223,6 @@ function MyDesk() {
 
   // returns seconds since midnight, 1 Jan 1970
   function getTime() {
-    console.log('get time called');
     return Math.floor(new Date().getTime() / 1000);
   }
 
@@ -241,8 +237,6 @@ function MyDesk() {
     try {
       if (typeof rawTime !== 'string')
         throw 'invalid data recieved, system abort';
-
-      console.log('reached', rawTime);
 
       var timeArr = rawTime.split(':');
       var s = parseInt(timeArr[2]);
