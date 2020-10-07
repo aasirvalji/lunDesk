@@ -28,7 +28,7 @@ function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
   const [urlInput, setUrlInput] = useState('');
   const [currentUrl, setCurrentUrl] = useState(
-    'https://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1'
+    'https://www.youtube.com/embed/41l6JcSdGTQ?rel=0&hd=1'
   );
   const [errorModal, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState(['', '']);
@@ -39,7 +39,7 @@ function MyDesk() {
   const [activeSession, setActiveSession] = useState(0);
   const [awaySession, setAwaySession] = useState(0);
 
-  const defaultUrl = 'https://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1';
+  const defaultUrl = 'https://www.youtube.com/embed/41l6JcSdGTQ?rel=0&hd=1';
 
   // tab change handler
   const handleTabChange = (e) => {
@@ -211,7 +211,7 @@ function MyDesk() {
     document.getElementById(`fab-${selectedIndex}`).style.backgroundColor =
       '#B20000';
 
-    setCurrentUrl('https://www.youtube.com/embed/kvO_nHnvPtQ?rel=0&hd=1');
+    setCurrentUrl('https://www.youtube.com/embed/41l6JcSdGTQ?rel=0&hd=1');
     setSelectedIndex(null);
     setSnackbar(true);
   }
