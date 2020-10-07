@@ -13,19 +13,14 @@ const Navbar = () => {
       <AppBar position="static" id="nav">
         <Toolbar id="toolbar">
           <div id="header-left">
-            <Typography variant="h6" id="miSquads">
-              myDesk
+            <Typography variant="h6" id="lunDesk">
+              lunDesk
             </Typography>
           </div>
 
-          {/* render links based on authentication status*/}
           <div id="header-right">
             <>
-              {/* <Typography variant="h6" id="about">
-                About
-              </Typography> */}
-              {/* currently testing dashboard route on frontend */}
-              <Typography variant="h6" id="login">
+              <Typography variant="h6" id="stayProd">
                 Stay productive
               </Typography>
             </>

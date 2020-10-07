@@ -1,3 +1,3 @@
 export default {
-  updateInterval: 100, // Our timer will be updated every 100 miliseconds
+  updateInterval: 100, // Timer will be updated every 100 miliseconds
 };

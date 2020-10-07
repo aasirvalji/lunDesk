@@ -46,6 +46,7 @@ function MyDesk() {
     if (watchMode) {
       if (document.visibilityState === 'visible') {
         // console.log('tab is activate');
+
         // set up new active session
         setActiveSession(getTime());
 
@@ -433,10 +434,10 @@ function MyDesk() {
                 <div className={styles.watchModeContainer}>
                   <DvrIcon className={styles.stopwatchIcon} />
                   <p>
-                    myDesk notifies you about how long you were studying for and
-                    how long you were gone once you leave and return to this tab
+                    lunDesk notifies you about how long you were studying for
+                    and how long you were gone once you leave and return to this
+                    tab
                   </p>
-                  {/* <button onClick={() => setStartTime()}>Click</button> */}
                 </div>
               </Paper>
             )}

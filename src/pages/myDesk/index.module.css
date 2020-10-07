@@ -138,7 +138,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* transform: translateX(-0.7rem); */
 }
 
 .controlsHeader > .gridOffButton {

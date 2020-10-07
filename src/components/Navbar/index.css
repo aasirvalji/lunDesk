@@ -25,13 +25,11 @@
   align-items: center;
 }
 
-#miSquads {
+#lunDesk {
   color: white;
 }
 
-#register,
-#login,
-#about {
+#stayProd {
   margin-left: 0.5rem;
   font-size: 0.8rem;
   color: white;
@@ -39,12 +37,12 @@
 }
 
 @media only screen and (max-width: 600px) {
-  /* reduced margin to prevent navbar from being pushed on to fixed register/login form */
   #nav {
     margin-bottom: 2.5rem;
   }
 }
 
+/* removed navbar on supported device(s) */
 @media only screen and (max-width: 280px) {
   #nav {
     display: none;
