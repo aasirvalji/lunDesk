@@ -18,13 +18,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import GolfCourseIcon from '@material-ui/icons/GolfCourse';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import GridOffIcon from '@material-ui/icons/GridOff';
-import TimerOffIcon from '@material-ui/icons/TimerOff';
 import TimerIcon from '@material-ui/icons/Timer';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import TouchAppIcon from '@material-ui/icons/TouchApp';
 import DvrIcon from '@material-ui/icons/Dvr';
-import { SystemUpdate } from '@material-ui/icons';
 
 function MyDesk() {
   const [videoQueue, setVideoQueue] = useState([]);
@@ -236,7 +234,9 @@ function MyDesk() {
   function formatTime(rawTime) {
     try {
       if (typeof rawTime !== 'string')
-        throw 'invalid data recieved, system abort';
+        throw Object.assign(new Error('invalid data recieved, system abort'), {
+          code: 400,
+        });
 
       var timeArr = rawTime.split(':');
       var s = parseInt(timeArr[2]);
@@ -272,7 +272,7 @@ function MyDesk() {
         return 'less than a second';
       }
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
       return;
     }
   }
