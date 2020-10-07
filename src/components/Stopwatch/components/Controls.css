@@ -5,6 +5,7 @@
 
 .Controls .controlsButton {
   min-width: 10%;
+  font-size: 0.75rem;
   cursor: pointer;
   margin: 0px 0px;
   white-space: nowrap;

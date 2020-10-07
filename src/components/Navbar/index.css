@@ -44,3 +44,9 @@
     margin-bottom: 2.5rem;
   }
 }
+
+@media only screen and (max-width: 280px) {
+  #nav {
+    display: none;
+  }
+}

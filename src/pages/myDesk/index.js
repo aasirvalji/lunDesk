@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './index.module.css';
 import ErrorModal from '../../components/ErrorModal/index';
 import Snackbar from '../../components/Snackbar/index';
+import UnsupportedDevice from '../../components/UnsupportedDevice';
 import { Stopwatch } from '../../components/Stopwatch';
 
 // material UI imports
@@ -136,8 +137,10 @@ function MyDesk() {
   const onSubmit = async (event) => {
     event.preventDefault();
     var yid = getYTId(urlInput);
-    console.log(yid);
-    if (yid.split(':')[0] === 'Error') {
+    if (urlInput === '') {
+      setErrorModal(true);
+      setErrorMessage(['Enter a URL', 'Please try again']);
+    } else if (yid.split(':')[0] === 'Error') {
       setErrorModal(true);
       setErrorMessage([yid.split(':')[1], 'Please try again']);
     } else {
@@ -437,7 +440,7 @@ function MyDesk() {
                   <DvrIcon className={styles.stopwatchIcon} />
                   <p>
                     myDesk notifies you about how long you were studying for and
-                    how you left when you switch to another tab/window
+                    how long you were gone once you leave and return to this tab
                   </p>
                   {/* <button onClick={() => setStartTime()}>Click</button> */}
                 </div>
@@ -469,6 +472,10 @@ function MyDesk() {
         message="Video completed"
         handleClose={handleClose}
       />
+
+      <div className={styles.unsupportedDeviceContainer}>
+        <UnsupportedDevice />
+      </div>
     </>
   );
 }
