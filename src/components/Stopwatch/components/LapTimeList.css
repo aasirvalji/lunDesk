@@ -20,3 +20,9 @@
   display: inline-block;
   float: left;
 }
+
+@media only screen and (max-width: 920px) {
+  .LapTimeList__headers span {
+    font-size: 0.6rem;
+  }
+}

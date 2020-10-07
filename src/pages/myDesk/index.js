@@ -432,7 +432,7 @@ function MyDesk() {
               />
             </div>
             {watchMode && (
-              <Paper elevation={5}>
+              <Paper elevation={5} className={styles.watchModeWrapper}>
                 <div className={styles.watchModeContainer}>
                   <DvrIcon className={styles.stopwatchIcon} />
                   <p>
@@ -445,7 +445,7 @@ function MyDesk() {
             )}
             {stopWatch && (
               <>
-                <Paper elevation={5}>
+                <Paper elevation={5} className={styles.stopwatchWrapper}>
                   <div className={styles.stopwatchContainer}>
                     <TimerIcon className={styles.stopwatchIcon} />
                     <Stopwatch />
