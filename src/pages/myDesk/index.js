@@ -333,7 +333,9 @@ function MyDesk() {
                       <PlayArrowIcon className={styles.editIcon} />
                     </Fab>
                     <p>
-                      {`${video.title} By ${video.author_name}`.length >= 90
+                      {!video.title || !video.author_name
+                        ? "There's a problem with this application at the moment. Please try again later."
+                        : `${video.title} By ${video.author_name}`.length >= 90
                         ? `${video.title} By ${video.author_name}`.substr(
                             0,
                             87
