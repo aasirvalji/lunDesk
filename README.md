@@ -23,7 +23,7 @@ Having moved to online learning, i've noticed i've been getting distracted much 
 
 ## Notes about this repository
 
-- This was a super quick tool I built for personal use. However, I made this public in hopes that it helps someone else 🙂
+- This was a super quick tool I built for personal use. However, I made this public in the hopes that it helps someone else 🙂
 
 - There will only be minor updates/bug fixes (if they arise) to the platform.
 
