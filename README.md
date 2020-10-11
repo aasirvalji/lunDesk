@@ -11,13 +11,13 @@
 
 ## About
 
-Having moved to online learning, i've noticed i've been getting quite distracted much easier than before. A prime contributor to this is Youtube. There's always a super enticing video that pops up on the side of my screen while im watching an unlisted video lecture for school or scavenging Youtube for videos to help me understand a topic im still fuzzy on.
+Having moved to online learning, i've noticed i've been getting distracted much easier than before. A prime contributor to this is Youtube. There's always a super enticing video that pops up on the side of my screen while im watching an unlisted video lecture for school or scavenging Youtube for videos to help me understand a topic im still fuzzy on.
 
 ## What makes lunDesk different?
 
 - You can check how long your productive youtube sessions last by enabling 'watch mode' in the control panel.
 
-- You can add multiple videos before starting your session. There's no need to go back to constantly go back to Youtube to add videos to your watch list.
+- You can add multiple videos before starting your session. There's no need to constantly go back to Youtube to add videos to your watch list.
 
 - More coming soon...
 
