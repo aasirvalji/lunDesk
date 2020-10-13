@@ -6,12 +6,12 @@
 </p>
 
 <p align="center">
-  Track your productivity. Learn with no distractions.
+  Learn with no distractions. Track your productivity.
 </p>
 
 ## About
 
-Having moved to online learning, i've noticed i've been getting distracted much easier than before. A prime contributor to this is Youtube. There's always a super enticing video that pops up on the side of my screen while im watching an unlisted video lecture for school or scavenging Youtube for videos to help me understand a topic im still fuzzy on.
+Having moved to online learning, i've noticed i've been getting distracted much easier than before. A prime contributor to this is Youtube. There's always a super enticing video that pops up on the side of my screen while im watching an unlisted video lecture for school or scavenging Youtube for videos to help me understand a topic im still fuzzy on. lunDesk solves this problem by removing unrelated videos from the side of your screen.
 
 ## What makes lunDesk different?
 
